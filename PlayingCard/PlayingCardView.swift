@@ -22,9 +22,44 @@ class PlayingCardView: UIView {
         return NSAttributedString(string: string, attributes: [.paragraphStyle:paragraphStyle, .font:font])
     }
     
-    private var connerString: NSAttributedString {
+    private var cornerString: NSAttributedString {
         return centeredAttributedString(rankString + "\n" + suit, fontSize: cornerFontSize )
     }
+    
+    lazy private var upperLeftCornerLabel:UILabel = createCornerLabel()
+    lazy private var lowerRightCornerLabel:UILabel =  createCornerLabel()
+    
+    private func createCornerLabel() -> UILabel{
+        let label = UILabel()
+        label.numberOfLines = 0
+        addSubview(label)
+        return label
+    }
+    
+    private func configureCornerLabel(_ label:UILabel){
+        label.attributedText = cornerString
+        label.frame.size = CGSize.zero
+        label.sizeToFit()
+        label.isHidden = !isFaceUp
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        configureCornerLabel(upperLeftCornerLabel)
+        upperLeftCornerLabel.frame.origin = bounds.origin.offsetBy(dx: cornerOffset, dy: cornerOffset)
+        configureCornerLabel(lowerRightCornerLabel)
+        lowerRightCornerLabel.transform = CGAffineTransform.identity.rotated(by: CGFloat.pi)
+        .translatedBy(x: lowerRightCornerLabel.frame.size.width, y: lowerRightCornerLabel.frame.size.height)
+        lowerRightCornerLabel.frame.origin = CGPoint(x: bounds.maxX, y: bounds.maxY).offsetBy(dx: -cornerOffset, dy: -cornerOffset).offsetBy(dx: -lowerRightCornerLabel.frame.size.width, dy: -lowerRightCornerLabel.frame.size.height)
+        
+    }
+    
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        setNeedsLayout()
+        setNeedsDisplay()
+    }
+    
     
     override func draw(_ rect: CGRect) {
         let roundedRect = UIBezierPath(roundedRect: bounds, cornerRadius:cornerRadius)
@@ -49,7 +84,7 @@ extension PlayingCardView{
         return bounds.size.height * SizeRatio.cornerRadiusToBoundsHeight
     }
     
-    private var connerOffset:CGFloat{
+    private var cornerOffset:CGFloat{
         return cornerRadius * SizeRatio.cornerOffSetToCornerRadius
     }
     
@@ -69,6 +104,42 @@ extension PlayingCardView{
     }
     
 }
+
+extension CGRect{
+    var leftHalf:CGRect{
+        return CGRect(x:minX, y:minY, width:width/2, height:height)
+    }
+    
+    var rightHalf:CGRect{
+        return CGRect(x:minX, y:minY, width:width/2, height:height)
+    }
+    
+    func inset(by size:CGSize) -> CGRect{
+        return insetBy(dx: size.width, dy: size.height)  }
+    func size(to size:CGSize) -> CGRect {
+        return CGRect(origin:origin, size:size)
+    }
+    
+    func zoom(by scale:CGFloat) ->CGRect{
+        let newWidth = width * scale
+        let newHeight  = height * scale
+        return insetBy(dx: (width - newWidth)/2, dy: (height - newHeight)/2)
+    }
+    
+}
+
+
+extension CGPoint{
+    func offsetBy(dx: CGFloat, dy: CGFloat) -> CGPoint {
+        return CGPoint(x:x+dx, y:y+dy)
+    }
+}
+
+
+
+
+
+
 
 
 
