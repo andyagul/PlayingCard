@@ -8,11 +8,24 @@
 
 import UIKit
 
+
+@IBDesignable
 class PlayingCardView: UIView {
     
-    var rank:Int = 5 { didSet { setNeedsDisplay(); setNeedsLayout() } }
-    var suit:String = "♡"{ didSet { setNeedsDisplay(); setNeedsLayout() } }
-    var isFaceUp = true{ didSet { setNeedsDisplay(); setNeedsLayout() } }
+    @IBInspectable var rank:Int = 12 { didSet { setNeedsDisplay(); setNeedsLayout() } }
+    @IBInspectable var suit:String = "♡"{ didSet { setNeedsDisplay(); setNeedsLayout() } }   
+    @IBInspectable var isFaceUp:Bool = true { didSet { setNeedsDisplay(); setNeedsLayout() } }
+    var faceCardScale:CGFloat = SizeRatio.faceCardImageSizeToBoundsSize { didSet { setNeedsDisplay(); setNeedsLayout() } }
+    
+   @objc func adjustFaceCardScale(buHandlingGuestureRecognize recognizer:UIPinchGestureRecognizer){
+    switch recognizer.state {
+    case .changed, .ended:
+        faceCardScale *= recognizer.scale
+        recognizer.scale = 1.0
+    default:
+        break  
+    }
+    }
     
     private func centeredAttributedString(_ string:String, fontSize:CGFloat) -> NSAttributedString{
         var font = UIFont.preferredFont(forTextStyle: .body) .withSize(fontSize)
@@ -49,7 +62,7 @@ class PlayingCardView: UIView {
         upperLeftCornerLabel.frame.origin = bounds.origin.offsetBy(dx: cornerOffset, dy: cornerOffset)
         configureCornerLabel(lowerRightCornerLabel)
         lowerRightCornerLabel.transform = CGAffineTransform.identity.rotated(by: CGFloat.pi)
-        .translatedBy(x: lowerRightCornerLabel.frame.size.width, y: lowerRightCornerLabel.frame.size.height)
+            .translatedBy(x: lowerRightCornerLabel.frame.size.width, y: lowerRightCornerLabel.frame.size.height)
         lowerRightCornerLabel.frame.origin = CGPoint(x: bounds.maxX, y: bounds.maxY).offsetBy(dx: -cornerOffset, dy: -cornerOffset).offsetBy(dx: -lowerRightCornerLabel.frame.size.width, dy: -lowerRightCornerLabel.frame.size.height)
         
     }
@@ -61,12 +74,25 @@ class PlayingCardView: UIView {
     }
     
     
+    
+    
+    
     override func draw(_ rect: CGRect) {
         let roundedRect = UIBezierPath(roundedRect: bounds, cornerRadius:cornerRadius)
         roundedRect.addClip()
         UIColor.white.setFill()
         roundedRect.fill()
         
+        if isFaceUp {
+            if let faceCardImage = UIImage(named:rankString + suit, in:Bundle(for:self.classForCoder), compatibleWith:traitCollection){
+                faceCardImage.draw(in: bounds.zoom(by: faceCardScale) )
+            }
+        }else{
+            if let cardBcakImge = UIImage(named:"cardBack", in:Bundle(for:self.classForCoder), compatibleWith:traitCollection){
+                cardBcakImge.draw(in: bounds)
+            }
+            
+        }
     }
     
 }
