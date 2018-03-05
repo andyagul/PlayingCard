@@ -14,6 +14,7 @@
 		8379A32D2046E6CC0017F353 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8379A32B2046E6CC0017F353 /* LaunchScreen.storyboard */; };
 		8379A3362046ED280017F353 /* PlayingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8379A3352046ED280017F353 /* PlayingCard.swift */; };
 		8379A3382046FA0A0017F353 /* PlayingCardDeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8379A3372046FA0A0017F353 /* PlayingCardDeck.swift */; };
+		8384D29F204D70E500C64FAE /* CardBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8384D29E204D70E500C64FAE /* CardBehavior.swift */; };
 		83A844982047862700D9F7F2 /* PlayingCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A844972047862700D9F7F2 /* PlayingCardView.swift */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +28,7 @@
 		8379A32E2046E6CC0017F353 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8379A3352046ED280017F353 /* PlayingCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayingCard.swift; sourceTree = "<group>"; };
 		8379A3372046FA0A0017F353 /* PlayingCardDeck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayingCardDeck.swift; sourceTree = "<group>"; };
+		8384D29E204D70E500C64FAE /* CardBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardBehavior.swift; sourceTree = "<group>"; };
 		83A844972047862700D9F7F2 /* PlayingCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayingCardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -62,6 +64,7 @@
 			children = (
 				83A844972047862700D9F7F2 /* PlayingCardView.swift */,
 				8379A3242046E6CC0017F353 /* ViewController.swift */,
+				8384D29E204D70E500C64FAE /* CardBehavior.swift */,
 				8379A3262046E6CC0017F353 /* Main.storyboard */,
 				8379A3352046ED280017F353 /* PlayingCard.swift */,
 				8379A3372046FA0A0017F353 /* PlayingCardDeck.swift */,
@@ -158,6 +161,7 @@
 				8379A3362046ED280017F353 /* PlayingCard.swift in Sources */,
 				83A844982047862700D9F7F2 /* PlayingCardView.swift in Sources */,
 				8379A3232046E6CC0017F353 /* AppDelegate.swift in Sources */,
+				8384D29F204D70E500C64FAE /* CardBehavior.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
